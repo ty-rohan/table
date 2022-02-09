@@ -16,7 +16,7 @@ import {
   ListItemText,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SortByAlphaIcon from "@mui/icons-material/SortByAlpha";
 import { makeStyles } from "@mui/styles";
 import EditIcon from "@mui/icons-material/Edit";
@@ -224,7 +224,7 @@ const rows = [
     ),
     col7: "aaa",
     col8: "24-12-2022",
-    col9: 2,
+    col9: 22,
     col10: 1,
     col11: 0,
   },
@@ -241,7 +241,7 @@ const rows = [
     ),
     col7: "aaa",
     col8: "14-10-2022",
-    col9: 2,
+    col9: 132,
     col10: 1,
     col11: 3,
   },
@@ -308,7 +308,7 @@ function stableSort(array, comparator) {
     }
     return a[1] - b[1];
   });
-  return stabilizedThis.map(el => el[0]);
+  return stabilizedThis.map((el) => el[0]);
 }
 
 const headCells = [
@@ -372,6 +372,7 @@ const headCells = [
     numeric: false,
     disablePadding: true,
     label: "Likes",
+    filter: true,
   },
   {
     id: "col11",
@@ -389,26 +390,34 @@ function EnhancedTableHead(props) {
     numSelected,
     rowCount,
     onRequestSort,
+    filterOption,
+    filterselectInitialData,
   } = props;
   const classes = useStyles();
 
-  const createSortHandler = property => event => {
+  const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
 
   const options = ["Blog", "case study", "faq", "product"];
 
-  const [selected, setSelected] = useState([]);
-  const isAllSelected =
-    options.length > 0 && selected.length === options.length;
+  const [selected, setSelected] = useState(filterselectInitialData);
+  // const isAllSelected =
+  //   options.length > 0 && selected.length === options.length;
 
-  const handleChange = event => {
+  const handleChange = (event, id) => {
     const value = event.target.value;
     if (value[value.length - 1] === "all") {
-      setSelected(selected.length === options.length ? [] : options);
+      setSelected({
+        ...selected,
+        [id]:
+          selected[id].length === filterOption[id].length
+            ? []
+            : filterOption[id],
+      });
       return;
     }
-    setSelected(value);
+    setSelected({ ...selected, [id]: value });
   };
 
   return (
@@ -425,7 +434,7 @@ function EnhancedTableHead(props) {
             }}
           />
         </TableCell>
-        {headCells.map(headCell => {
+        {headCells.map((headCell) => {
           return headCell.filter && headCell.filter ? (
             <TableCell
               key={headCell.id}
@@ -440,10 +449,12 @@ function EnhancedTableHead(props) {
                 className={classes.tableHeadColor}
               > */}
               {headCell.label}
+              {console.log(selected[headCell.id], "selected[headCell.id]")}
               <Select
                 multiple
-                value={selected}
-                onChange={handleChange}
+                // value={selected[headCell.id]}
+                value={selected[headCell.id]}
+                onChange={(e) => handleChange(e, headCell.id)}
                 renderValue={() => false}
                 IconComponent={FilterAltOutlinedIcon}
                 variant="standard"
@@ -452,7 +463,13 @@ function EnhancedTableHead(props) {
                 <MenuItem
                   value="all"
                   classes={{
-                    root: isAllSelected ? classes.selectedAll : "",
+                    root:
+                      selected[headCell.id] &&
+                      selected[headCell.id].length ===
+                        filterOption[headCell.id] &&
+                      filterOption[headCell.id].length
+                        ? classes.selectedAll
+                        : "",
                   }}
                 >
                   <ListItemIcon>
@@ -460,9 +477,19 @@ function EnhancedTableHead(props) {
                       classes={{
                         indeterminate: classes.indeterminateColor,
                       }}
-                      checked={isAllSelected}
+                      checked={
+                        filterOption[headCell.id] &&
+                        filterOption[headCell.id].length > 0 &&
+                        selected[headCell.id] &&
+                        selected[headCell.id].length ===
+                          filterOption[headCell.id].length
+                      }
                       indeterminate={
-                        selected.length > 0 && selected.length < options.length
+                        selected[headCell.id] &&
+                        selected[headCell.id].length > 0 &&
+                        selected[headCell.id] &&
+                        selected[headCell.id].length <
+                          filterOption[headCell.id].length
                       }
                     />
                   </ListItemIcon>
@@ -471,14 +498,20 @@ function EnhancedTableHead(props) {
                     primary="Select All"
                   />
                 </MenuItem>
-                {options.map(option => (
-                  <MenuItem key={option} value={option}>
-                    <ListItemIcon>
-                      <Checkbox checked={selected.indexOf(option) > -1} />
-                    </ListItemIcon>
-                    <ListItemText primary={option} />
-                  </MenuItem>
-                ))}
+                {filterOption[headCell.id] &&
+                  filterOption[headCell.id].map((option) => (
+                    <MenuItem key={option} value={option}>
+                      <ListItemIcon>
+                        <Checkbox
+                          checked={
+                            selected[headCell.id] &&
+                            selected[headCell.id].indexOf(option) > -1
+                          }
+                        />
+                      </ListItemIcon>
+                      <ListItemText primary={option} />
+                    </MenuItem>
+                  ))}
               </Select>
               {/* </TableSortLabel> */}
             </TableCell>
@@ -526,6 +559,39 @@ export default function EnhancedTable() {
   const [anchorEl, setAnchorEl] = useState(null);
   const [filterSelected, setFilterSelected] = useState([]);
   const [filterOption, setFilterOption] = useState([]);
+  const [filterHead, setFilterHead] = useState([]);
+  const filterselectInitialData = {
+    col1: [],
+    col2: [],
+    col3: [],
+    col4: [],
+    col5: [],
+    col6: [],
+    col7: [],
+    col8: [],
+    col9: [],
+    col10: [],
+    col11: [],
+    col12: [],
+  };
+  useEffect(() => {
+    headCells.map((headCell) => {
+      if (headCell.filter && headCell.filter) {
+        setFilterHead((oldArray) => [...oldArray, headCell.id]);
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    if (filterHead.length) {
+      let array = [];
+      filterHead.map((val) => {
+        array[val] = [...new Set(rows.map((items) => items[val]))];
+      });
+      console.log(array, "array");
+      setFilterOption(array);
+    }
+  }, [filterHead]);
 
   const classes = useStyles();
 
@@ -535,9 +601,9 @@ export default function EnhancedTable() {
     setOrderBy(property);
   };
 
-  const handleSelectAllClick = event => {
+  const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = rows.map(n => n.col1);
+      const newSelecteds = rows.map((n) => n.col1);
       setSelected(newSelecteds);
       return;
     }
@@ -568,12 +634,12 @@ export default function EnhancedTable() {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = event => {
+  const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
 
-  const isSelected = name => selected.indexOf(name) !== -1;
+  const isSelected = (name) => selected.indexOf(name) !== -1;
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
@@ -599,6 +665,8 @@ export default function EnhancedTable() {
               setAnchorEl={setAnchorEl}
               setFilterSelected={setFilterSelected}
               filterSelected={filterSelected}
+              filterOption={filterOption}
+              filterselectInitialData={filterselectInitialData}
             />
             <TableBody>
               {/* if you don't need to support IE11, you can replace the `stableSort` call with:
@@ -622,7 +690,7 @@ export default function EnhancedTable() {
                           inputProps={{
                             "aria-labelledby": labelId,
                           }}
-                          onClick={event => handleClick(event, row.col1)}
+                          onClick={(event) => handleClick(event, row.col1)}
                         />
                       </TableCell>
                       {Object.entries(row).map(([_, ele], index) => {
