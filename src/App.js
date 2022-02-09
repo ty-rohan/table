@@ -1,23 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import ButtonComponent from "./component/ButtonComponent";
+import TableComponent from "./component/TableComponent";
+import "./App.css";
+import SwitchComponent from "./component/SwitchComponent";
+import SimpleDropDown from "./component/SimpleDropDown";
+import CkEditorComponent from "./component/CkEditorComponent";
+import Sidebar from "./component/Sidebar";
+import Multipledropdown from "./component/multipledropdown";
+import EditorComponent from "./component/Editor";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      {/* <TableComponent /> */}
+      {/* <ButtonComponent /> */}
+      {/* <SwitchComponent /> */}
+      {/* <SimpleDropDown /> */}
+      {/* <CkEditorComponent /> */}
+      {/* <Sidebar /> */}
+      {/* <Multipledropdown /> */}
+      <EditorComponent />
     </div>
   );
 }

@@ -1,38 +1,58 @@
-.App {
-  text-align: center;
+* {
+  margin: 0;
+  padding: 0;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.ck.ck-editor {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  flex-direction: column-reverse;
 }
-
-.App-link {
-  color: #61dafb;
+.MuiTablePagination-selectLabel {
+  margin-bottom: 0px !important;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.MuiTablePagination-displayedRows {
+  margin-bottom: 0px !important;
+}
+.css-a88p61-MuiInputBase-root-MuiInput-root:before {
+  border-bottom: none !important;
+}
+.css-a88p61-MuiInputBase-root-MuiInput-root:after {
+  border-bottom: none !important;
+}
+.demo-option-custom-wide {
+  color: black !important;
+  text-decoration: none !important;
+}
+.toolbar-class {
+  margin: 10px auto !important;
+  border-radius: 5px !important;
+  box-shadow: 0px 3px 6px #00000029 !important;
+}
+.wrapper-class {
+  display: flex !important;
+  flex-direction: column-reverse !important;
+  border: 1px solid black !important;
+}
+.demo-editor-custom {
+  height: 50vh !important;
+}
+.demo-option-custom-wide {
+  border: 1px solid #dddbda !important;
+  border-radius: 2px !important;
+}
+.rdw-dropdown-selectedtext {
+  color: #2b2826 !important;
+  text-decoration: none !important;
+}
+.demo-option-custom-medium {
+  border: 1px solid #dddbda !important;
+  border-radius: 2px !important;
+}
+.inline-group {
+  border: 1px solid #dddbda !important;
+  border-radius: 2px !important;
+  margin-left: 5px !important;
+}
+.demo-option-custom {
+  border: none !important;
 }
