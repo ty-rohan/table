@@ -401,12 +401,8 @@ function EnhancedTableHead(props) {
     onRequestSort(event, property);
   };
 
-  const options = ["Blog", "case study", "faq", "product"];
-
   const [selected, setSelected] = useState(filterselectInitialData);
   useEffect(() => {
-    debugger;
-    // setRows(tablerow);
     let selectedkeys = Object.keys(selected);
     let filteredarray = [...tablerow];
     selectedkeys.map((val) => {
@@ -419,13 +415,6 @@ function EnhancedTableHead(props) {
     });
     console.log(filteredarray, "filteredarray ");
     setRows(filteredarray);
-    // if (selected["col9"].length) {
-    //   let filtered = tablerow.filter((e) =>
-    //     selected["col9"].includes(e["col9"])
-    //   );
-    //   console.log(selectedkeys, "selectedkeys ");
-    //   setRows(filtered);
-    // }
   }, [selected]);
   // const isAllSelected =
   //   options.length > 0 && selected.length === options.length;
