@@ -57,7 +57,7 @@ const useStyles = makeStyles({
   },
 });
 
-const rows = [
+const tablerow = [
   {
     col1: 1,
     col2: "Cupcake",
@@ -71,8 +71,8 @@ const rows = [
     ),
     col7: "aaa",
     col8: "24-10-2022",
-    col9: 2,
-    col10: 1,
+    col9: 12,
+    col10: 10,
     col11: 0,
   },
   {
@@ -88,7 +88,7 @@ const rows = [
     ),
     col7: "aaa",
     col8: "25-10-2022",
-    col9: 2,
+    col9: 22,
     col10: 1,
     col11: 0,
   },
@@ -105,7 +105,7 @@ const rows = [
     ),
     col7: "aaa",
     col8: "26-10-2022",
-    col9: 2,
+    col9: 22,
     col10: 1,
     col11: 0,
   },
@@ -140,7 +140,7 @@ const rows = [
     col7: "aaa",
     col8: "28-10-2022",
     col9: 2,
-    col10: 1,
+    col10: 33,
     col11: 0,
   },
   {
@@ -156,8 +156,8 @@ const rows = [
     ),
     col7: "aaa",
     col8: "20-10-2022",
-    col9: 2,
-    col10: 1,
+    col9: 12,
+    col10: 33,
     col11: 0,
   },
   {
@@ -173,8 +173,8 @@ const rows = [
     ),
     col7: "aaa",
     col8: "21-10-2022",
-    col9: 2,
-    col10: 1,
+    col9: 4,
+    col10: 33,
     col11: 0,
   },
   {
@@ -191,7 +191,7 @@ const rows = [
     col7: "aaa",
     col8: "24-11-2022",
     col9: 2,
-    col10: 1,
+    col10: 22,
     col11: 0,
   },
   {
@@ -207,8 +207,8 @@ const rows = [
     ),
     col7: "aaa",
     col8: "25-11-2022",
-    col9: 2,
-    col10: 1,
+    col9: 1,
+    col10: 33,
     col11: 0,
   },
   {
@@ -242,7 +242,7 @@ const rows = [
     col7: "aaa",
     col8: "14-10-2022",
     col9: 132,
-    col10: 1,
+    col10: 11,
     col11: 3,
   },
   {
@@ -259,7 +259,7 @@ const rows = [
     col7: "aaa",
     col8: "11-10-2022",
     col9: 2,
-    col10: 1,
+    col10: 33,
     col11: 0,
   },
   {
@@ -276,7 +276,7 @@ const rows = [
     col7: "aaa",
     col8: "24-12-2022",
     col9: 2,
-    col10: 1,
+    col10: 22,
     col11: 0,
   },
 ];
@@ -392,6 +392,8 @@ function EnhancedTableHead(props) {
     onRequestSort,
     filterOption,
     filterselectInitialData,
+    rows,
+    setRows,
   } = props;
   const classes = useStyles();
 
@@ -402,6 +404,29 @@ function EnhancedTableHead(props) {
   const options = ["Blog", "case study", "faq", "product"];
 
   const [selected, setSelected] = useState(filterselectInitialData);
+  useEffect(() => {
+    debugger;
+    // setRows(tablerow);
+    let selectedkeys = Object.keys(selected);
+    let filteredarray = [...tablerow];
+    selectedkeys.map((val) => {
+      if (selected[val].length) {
+        let filtered = filteredarray.filter((e) =>
+          selected[val].includes(e[val])
+        );
+        filteredarray = [...filtered];
+      }
+    });
+    console.log(filteredarray, "filteredarray ");
+    setRows(filteredarray);
+    // if (selected["col9"].length) {
+    //   let filtered = tablerow.filter((e) =>
+    //     selected["col9"].includes(e["col9"])
+    //   );
+    //   console.log(selectedkeys, "selectedkeys ");
+    //   setRows(filtered);
+    // }
+  }, [selected]);
   // const isAllSelected =
   //   options.length > 0 && selected.length === options.length;
 
@@ -560,19 +585,10 @@ export default function EnhancedTable() {
   const [filterSelected, setFilterSelected] = useState([]);
   const [filterOption, setFilterOption] = useState([]);
   const [filterHead, setFilterHead] = useState([]);
+  const [rows, setRows] = useState(tablerow);
   const filterselectInitialData = {
-    col1: [],
-    col2: [],
-    col3: [],
-    col4: [],
-    col5: [],
-    col6: [],
-    col7: [],
-    col8: [],
     col9: [],
     col10: [],
-    col11: [],
-    col12: [],
   };
   useEffect(() => {
     headCells.map((headCell) => {
@@ -586,7 +602,7 @@ export default function EnhancedTable() {
     if (filterHead.length) {
       let array = [];
       filterHead.map((val) => {
-        array[val] = [...new Set(rows.map((items) => items[val]))];
+        array[val] = [...new Set(tablerow.map((items) => items[val]))];
       });
       console.log(array, "array");
       setFilterOption(array);
@@ -655,6 +671,8 @@ export default function EnhancedTable() {
             className={classes.MuiTableRow}
           >
             <EnhancedTableHead
+              rows={rows}
+              setRows={setRows}
               numSelected={selected.length}
               order={order}
               orderBy={orderBy}
