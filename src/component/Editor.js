@@ -4,7 +4,7 @@ import { Editor } from "react-draft-wysiwyg";
 import { useState } from "react";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import draftToHtml from "draftjs-to-html";
-import parse from "html-react-parser";
+// import parse from "html-react-parser";
 
 const EditorComponent = () => {
   const [state, setState] = useState(EditorState.createEmpty());
@@ -62,9 +62,9 @@ const EditorComponent = () => {
         value={draftToHtml(convertToRaw(state.getCurrentContent()))}
         className="w-100"
       />
-      <div>
+      {/* <div>
         {parse(draftToHtml(convertToRaw(state.getCurrentContent())), options)}
-      </div>
+      </div> */}
     </div>
   );
 };

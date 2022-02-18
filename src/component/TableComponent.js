@@ -14,15 +14,17 @@ import {
   Select,
   ListItemIcon,
   ListItemText,
+  Modal,
+  IconButton,
+  Collapse,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { useState, useEffect } from "react";
 import SortByAlphaIcon from "@mui/icons-material/SortByAlpha";
 import { makeStyles } from "@mui/styles";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
-import PreviewIcon from "@mui/icons-material/Preview";
-import SwitchComponent from "./SwitchComponent";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 
 const useStyles = makeStyles({
@@ -50,236 +52,16 @@ const useStyles = makeStyles({
   select: {
     "& .MuiSelect-select": {
       minWidth: "0 !important",
+      minHeight: "0 !important",
     },
     "& .MuiSelect-icon": {
       fontSize: "1.2rem !important",
     },
+    iconOpen: {
+      transition: "none !important",
+    },
   },
 });
-
-const tablerow = [
-  {
-    col1: 1,
-    col2: "Cupcake",
-    col3: 305,
-    col4: 3.7,
-    col5: 67,
-    col6: (
-      <>
-        <SwitchComponent />
-      </>
-    ),
-    col7: "aaa",
-    col8: "24-10-2022",
-    col9: 12,
-    col10: 10,
-    col11: 0,
-  },
-  {
-    col1: 2,
-    col2: "Donut",
-    col3: 452,
-    col4: 25.0,
-    col5: 51,
-    col6: (
-      <>
-        <SwitchComponent />
-      </>
-    ),
-    col7: "aaa",
-    col8: "25-10-2022",
-    col9: 22,
-    col10: 1,
-    col11: 0,
-  },
-  {
-    col1: 3,
-    col2: "Eclair",
-    col3: 262,
-    col4: 16.0,
-    col5: 24,
-    col6: (
-      <>
-        <SwitchComponent />
-      </>
-    ),
-    col7: "aaa",
-    col8: "26-10-2022",
-    col9: 22,
-    col10: 1,
-    col11: 0,
-  },
-  {
-    col1: 4,
-    col2: "Frozen yoghurt",
-    col3: 159,
-    col4: 6.0,
-    col5: 24,
-    col6: (
-      <>
-        <SwitchComponent />
-      </>
-    ),
-    col7: "aaa",
-    col8: "25-10-2022",
-    col9: 2,
-    col10: 1,
-    col11: 0,
-  },
-  {
-    col1: 5,
-    col2: "Gingerbread",
-    col3: 356,
-    col4: 16.0,
-    col5: 49,
-    col6: (
-      <>
-        <SwitchComponent />
-      </>
-    ),
-    col7: "aaa",
-    col8: "28-10-2022",
-    col9: 2,
-    col10: 33,
-    col11: 0,
-  },
-  {
-    col1: 6,
-    col2: "Honeycomb",
-    col3: 408,
-    col4: 3.2,
-    col5: 87,
-    col6: (
-      <>
-        <SwitchComponent />
-      </>
-    ),
-    col7: "aaa",
-    col8: "20-10-2022",
-    col9: 12,
-    col10: 33,
-    col11: 0,
-  },
-  {
-    col1: 7,
-    col2: "Ice cream sandwich",
-    col3: 237,
-    col4: 9.0,
-    col5: 37,
-    col6: (
-      <>
-        <SwitchComponent />
-      </>
-    ),
-    col7: "aaa",
-    col8: "21-10-2022",
-    col9: 4,
-    col10: 33,
-    col11: 0,
-  },
-  {
-    col1: 8,
-    col2: "Jelly Bean",
-    col3: 375,
-    col4: 0.0,
-    col5: 94,
-    col6: (
-      <>
-        <SwitchComponent />
-      </>
-    ),
-    col7: "aaa",
-    col8: "24-11-2022",
-    col9: 2,
-    col10: 22,
-    col11: 0,
-  },
-  {
-    col1: 9,
-    col2: "KitKat",
-    col3: 518,
-    col4: 26.0,
-    col5: 65,
-    col6: (
-      <>
-        <SwitchComponent />
-      </>
-    ),
-    col7: "aaa",
-    col8: "25-11-2022",
-    col9: 1,
-    col10: 33,
-    col11: 0,
-  },
-  {
-    col1: 10,
-    col2: "Lollipop",
-    col3: 392,
-    col4: 0.2,
-    col5: 98,
-    col6: (
-      <>
-        <SwitchComponent />
-      </>
-    ),
-    col7: "aaa",
-    col8: "24-12-2022",
-    col9: 22,
-    col10: 1,
-    col11: 0,
-  },
-  {
-    col1: 11,
-    col2: "Marshmallow",
-    col3: 318,
-    col4: 0,
-    col5: 81,
-    col6: (
-      <>
-        <SwitchComponent />
-      </>
-    ),
-    col7: "aaa",
-    col8: "14-10-2022",
-    col9: 132,
-    col10: 11,
-    col11: 3,
-  },
-  {
-    col1: 12,
-    col2: "Nougat",
-    col3: 360,
-    col4: 19.0,
-    col5: 9,
-    col6: (
-      <>
-        <SwitchComponent />
-      </>
-    ),
-    col7: "aaa",
-    col8: "11-10-2022",
-    col9: 2,
-    col10: 33,
-    col11: 0,
-  },
-  {
-    col1: 13,
-    col2: "Oreo",
-    col3: 437,
-    col4: 18.0,
-    col5: 63,
-    col6: (
-      <>
-        <SwitchComponent />
-      </>
-    ),
-    col7: "aaa",
-    col8: "24-12-2022",
-    col9: 2,
-    col10: 22,
-    col11: 0,
-  },
-];
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -308,79 +90,8 @@ function stableSort(array, comparator) {
     }
     return a[1] - b[1];
   });
-  return stabilizedThis.map((el) => el[0]);
+  return stabilizedThis.map(el => el[0]);
 }
-
-const headCells = [
-  {
-    id: "col1",
-    numeric: false,
-    disablePadding: true,
-    label: "SL No.",
-  },
-  {
-    id: "col2",
-    numeric: false,
-    disablePadding: true,
-    label: "Blog Heading",
-  },
-  {
-    id: "col3",
-    numeric: false,
-    disablePadding: true,
-    label: "Category",
-  },
-  {
-    id: "col4",
-    numeric: false,
-    disablePadding: true,
-    label: "Picture",
-  },
-  {
-    id: "col5",
-    numeric: false,
-    disablePadding: true,
-    label: "Short Description",
-  },
-  {
-    id: "col6",
-    numeric: false,
-    disablePadding: true,
-    label: "Publish",
-  },
-  {
-    id: "col7",
-    numeric: false,
-    disablePadding: true,
-    label: "Modified By",
-  },
-  {
-    id: "col8",
-    numeric: false,
-    disablePadding: true,
-    label: "Modified On",
-  },
-  {
-    id: "col9",
-    numeric: false,
-    disablePadding: true,
-    label: "Comments",
-    filter: true,
-  },
-  {
-    id: "col10",
-    numeric: false,
-    disablePadding: true,
-    label: "Likes",
-    filter: true,
-  },
-  {
-    id: "col11",
-    numeric: false,
-    disablePadding: true,
-    label: "Dislikes",
-  },
-];
 
 function EnhancedTableHead(props) {
   const {
@@ -392,12 +103,13 @@ function EnhancedTableHead(props) {
     onRequestSort,
     filterOption,
     filterselectInitialData,
-    rows,
     setRows,
+    tablerow,
+    headCells,
   } = props;
   const classes = useStyles();
 
-  const createSortHandler = (property) => (event) => {
+  const createSortHandler = property => event => {
     onRequestSort(event, property);
   };
 
@@ -405,19 +117,16 @@ function EnhancedTableHead(props) {
   useEffect(() => {
     let selectedkeys = Object.keys(selected);
     let filteredarray = [...tablerow];
-    selectedkeys.map((val) => {
+    selectedkeys.map(val => {
       if (selected[val].length) {
-        let filtered = filteredarray.filter((e) =>
+        let filtered = filteredarray.filter(e =>
           selected[val].includes(e[val])
         );
         filteredarray = [...filtered];
       }
     });
-    console.log(filteredarray, "filteredarray ");
     setRows(filteredarray);
   }, [selected]);
-  // const isAllSelected =
-  //   options.length > 0 && selected.length === options.length;
 
   const handleChange = (event, id) => {
     const value = event.target.value;
@@ -448,7 +157,7 @@ function EnhancedTableHead(props) {
             }}
           />
         </TableCell>
-        {headCells.map((headCell) => {
+        {headCells.map(headCell => {
           return headCell.filter && headCell.filter ? (
             <TableCell
               key={headCell.id}
@@ -457,18 +166,11 @@ function EnhancedTableHead(props) {
               sortDirection={orderBy === headCell.id ? order : false}
               // style={{ maxWidth: 1000 }}
             >
-              {/* <TableSortLabel
-                active={true}
-                IconComponent={null}
-                className={classes.tableHeadColor}
-              > */}
               {headCell.label}
-              {console.log(selected[headCell.id], "selected[headCell.id]")}
               <Select
                 multiple
-                // value={selected[headCell.id]}
                 value={selected[headCell.id]}
-                onChange={(e) => handleChange(e, headCell.id)}
+                onChange={e => handleChange(e, headCell.id)}
                 renderValue={() => false}
                 IconComponent={FilterAltOutlinedIcon}
                 variant="standard"
@@ -513,7 +215,7 @@ function EnhancedTableHead(props) {
                   />
                 </MenuItem>
                 {filterOption[headCell.id] &&
-                  filterOption[headCell.id].map((option) => (
+                  filterOption[headCell.id].map(option => (
                     <MenuItem key={option} value={option}>
                       <ListItemIcon>
                         <Checkbox
@@ -527,7 +229,6 @@ function EnhancedTableHead(props) {
                     </MenuItem>
                   ))}
               </Select>
-              {/* </TableSortLabel> */}
             </TableCell>
           ) : (
             <TableCell
@@ -549,7 +250,7 @@ function EnhancedTableHead(props) {
             </TableCell>
           );
         })}
-        <TableCell align="left" padding="none" style={{ width: 100 }}>
+        <TableCell align="left" padding="none" style={{ width: 150 }}>
           <TableSortLabel
             active={true}
             IconComponent={null}
@@ -563,7 +264,11 @@ function EnhancedTableHead(props) {
   );
 }
 
-export default function EnhancedTable() {
+export default function TableComponent({
+  tablerow = [],
+  headCells = [],
+  filterselectInitialData = [],
+}) {
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("col1");
   const [selected, setSelected] = useState([]);
@@ -575,14 +280,15 @@ export default function EnhancedTable() {
   const [filterOption, setFilterOption] = useState([]);
   const [filterHead, setFilterHead] = useState([]);
   const [rows, setRows] = useState(tablerow);
-  const filterselectInitialData = {
-    col9: [],
-    col10: [],
-  };
+  const [open, setOpen] = useState(false);
+  // const filterselectInitialData = {
+  //   col3: [],
+  //   col6: [],
+  // };
   useEffect(() => {
-    headCells.map((headCell) => {
+    headCells.map(headCell => {
       if (headCell.filter && headCell.filter) {
-        setFilterHead((oldArray) => [...oldArray, headCell.id]);
+        setFilterHead(oldArray => [...oldArray, headCell.id]);
       }
     });
   }, []);
@@ -590,10 +296,9 @@ export default function EnhancedTable() {
   useEffect(() => {
     if (filterHead.length) {
       let array = [];
-      filterHead.map((val) => {
-        array[val] = [...new Set(tablerow.map((items) => items[val]))];
+      filterHead.map(val => {
+        array[val] = [...new Set(tablerow.map(items => items[val]))];
       });
-      console.log(array, "array");
       setFilterOption(array);
     }
   }, [filterHead]);
@@ -606,9 +311,9 @@ export default function EnhancedTable() {
     setOrderBy(property);
   };
 
-  const handleSelectAllClick = (event) => {
+  const handleSelectAllClick = event => {
     if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.col1);
+      const newSelecteds = rows.map(n => n.col1);
       setSelected(newSelecteds);
       return;
     }
@@ -639,12 +344,12 @@ export default function EnhancedTable() {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (event) => {
+  const handleChangeRowsPerPage = event => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
 
-  const isSelected = (name) => selected.indexOf(name) !== -1;
+  const isSelected = name => selected.indexOf(name) !== -1;
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
@@ -674,6 +379,8 @@ export default function EnhancedTable() {
               filterSelected={filterSelected}
               filterOption={filterOption}
               filterselectInitialData={filterselectInitialData}
+              headCells={headCells}
+              tablerow={tablerow}
             />
             <TableBody>
               {/* if you don't need to support IE11, you can replace the `stableSort` call with:
@@ -684,61 +391,81 @@ export default function EnhancedTable() {
                   const isItemSelected = isSelected(row.col1);
                   const labelId = `enhanced-table-checkbox-${index}`;
                   return (
-                    <TableRow
-                      hover
-                      key={row.col1}
-                      onMouseEnter={() => setHoverRow(index)}
-                      onMouseLeave={() => setHoverRow()}
-                    >
-                      <TableCell padding="checkbox">
-                        <Checkbox
-                          color="primary"
-                          checked={isItemSelected}
-                          inputProps={{
-                            "aria-labelledby": labelId,
-                          }}
-                          onClick={(event) => handleClick(event, row.col1)}
-                        />
-                      </TableCell>
-                      {Object.entries(row).map(([_, ele], index) => {
-                        return (
-                          <TableCell
-                            key={index}
-                            sx={{ pt: { lg: 2, sm: 1 }, pb: { lg: 1, sm: 1 } }}
-                            align="left"
-                            padding="none"
+                    <>
+                      <TableRow
+                        hover
+                        key={row.col1}
+                        onMouseEnter={() => setHoverRow(index)}
+                        onMouseLeave={() => setHoverRow()}
+                      >
+                        <TableCell padding="checkbox">
+                          <Checkbox
+                            color="primary"
+                            checked={isItemSelected}
+                            inputProps={{
+                              "aria-labelledby": labelId,
+                            }}
+                            onClick={event => handleClick(event, row.col1)}
+                          />
+                        </TableCell>
+                        <TableCell align="left" padding="none">
+                          {row.col1}
+                        </TableCell>
+                        <TableCell align="left" padding="none">
+                          <IconButton
+                            aria-label="expand row"
+                            size="small"
+                            onClick={() => setOpen(!open)}
                           >
-                            {ele}
-                          </TableCell>
-                        );
-                      })}
-                      <TableCell style={{ paddingLeft: "0px" }}>
-                        {hoverRow === index && (
+                            {open ? "close" : "open"}
+                          </IconButton>
+                          {row.col2}
+                        </TableCell>
+                        <TableCell align="left" padding="none">
+                          {row.col3}
+                        </TableCell>
+                        <TableCell align="left" padding="none">
+                          {row.col4}
+                        </TableCell>
+                        <TableCell align="left" padding="none">
+                          {row.col5}
+                        </TableCell>
+                        <TableCell align="left" padding="none">
+                          {row.col6}
+                        </TableCell>
+                        <TableCell align="left" padding="none">
+                          {row.col7}
+                        </TableCell>
+                        <TableCell style={{ paddingLeft: "0px" }}>
+                          {/* {hoverRow === index && ( */}
                           <>
-                            <Tooltip title="Edit">
-                              <EditIcon
+                            <Tooltip title="Edit Script">
+                              <EditOutlinedIcon
+                                className="mr-3"
+                                color="primary"
                                 style={{
-                                  fill: "#0072ea",
                                   fontSize: "15px",
                                   cursor: "pointer",
                                 }}
-                                onClick={() => console.log("edit")}
+                                onClick={() => console.log(row.col1)}
                               />
                             </Tooltip>
-                            <Tooltip title="Delete">
-                              <DeleteIcon
+                            <Tooltip title="Delete Script">
+                              <DeleteOutlineOutlinedIcon
+                                className="mx-4"
+                                color="primary"
                                 style={{
-                                  fill: "#0072ea",
                                   fontSize: "15px",
                                   cursor: "pointer",
                                 }}
                                 onClick={() => console.log("delete")}
                               />
                             </Tooltip>
-                            <Tooltip title="Preview">
-                              <PreviewIcon
+                            <Tooltip title="More Actions">
+                              <MoreVertOutlinedIcon
+                                className="ml-3"
+                                color="primary"
                                 style={{
-                                  fill: "#0072ea",
                                   fontSize: "15px",
                                   cursor: "pointer",
                                 }}
@@ -746,9 +473,108 @@ export default function EnhancedTable() {
                               />
                             </Tooltip>
                           </>
-                        )}
-                      </TableCell>
-                    </TableRow>
+                          {/* )} */}
+                        </TableCell>
+                      </TableRow>
+                      {row.children && (
+                        <TableRow hover key={row.col1}>
+                          <TableCell style={{ padding: 0 }} colSpan={"100%"}>
+                            <Collapse in={open} timeout="auto" unmountOnExit>
+                              {row.children.map((item, index) => {
+                                return (
+                                  <Table>
+                                    <TableBody>
+                                      <TableRow key={item.col1}>
+                                        <TableCell padding="checkbox">
+                                          <Checkbox
+                                            color="primary"
+                                            checked={isItemSelected}
+                                            inputProps={{
+                                              "aria-labelledby": labelId,
+                                            }}
+                                            onClick={event =>
+                                              handleClick(event, item.col1)
+                                            }
+                                          />
+                                        </TableCell>
+                                        <TableCell align="left" padding="none">
+                                          {item.col1}
+                                        </TableCell>
+                                        <TableCell align="left" padding="none">
+                                          {item.col2}
+                                        </TableCell>
+                                        <TableCell align="left" padding="none">
+                                          {item.col3}
+                                        </TableCell>
+                                        <TableCell align="left" padding="none">
+                                          {item.col4}
+                                        </TableCell>
+                                        <TableCell align="left" padding="none">
+                                          {item.col5}
+                                        </TableCell>
+                                        <TableCell align="left" padding="none">
+                                          {item.col6}
+                                        </TableCell>
+                                        <TableCell align="left" padding="none">
+                                          {item.col7}
+                                        </TableCell>
+                                        <TableCell
+                                          style={{ paddingLeft: "0px" }}
+                                        >
+                                          {/* {hoverRow === index && ( */}
+                                          <>
+                                            <Tooltip title="Edit Script">
+                                              <EditOutlinedIcon
+                                                className="mr-3"
+                                                color="primary"
+                                                style={{
+                                                  fontSize: "15px",
+                                                  cursor: "pointer",
+                                                }}
+                                                onClick={() =>
+                                                  console.log(item.col1)
+                                                }
+                                              />
+                                            </Tooltip>
+                                            <Tooltip title="Delete Script">
+                                              <DeleteOutlineOutlinedIcon
+                                                className="mx-4"
+                                                color="primary"
+                                                style={{
+                                                  fontSize: "15px",
+                                                  cursor: "pointer",
+                                                }}
+                                                onClick={() =>
+                                                  console.log("delete")
+                                                }
+                                              />
+                                            </Tooltip>
+                                            <Tooltip title="More Actions">
+                                              <MoreVertOutlinedIcon
+                                                className="ml-3"
+                                                color="primary"
+                                                style={{
+                                                  fontSize: "15px",
+                                                  cursor: "pointer",
+                                                }}
+                                                onClick={() =>
+                                                  console.log("preview")
+                                                }
+                                              />
+                                            </Tooltip>
+                                          </>
+                                          {/* )} */}
+                                        </TableCell>
+                                      </TableRow>
+                                    </TableBody>
+                                  </Table>
+                                );
+                              })}
+                            </Collapse>
+                          </TableCell>
+                        </TableRow>
+                      )}
+                    </>
                   );
                 })}
               {emptyRows > 0 && (
